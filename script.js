@@ -108,3 +108,28 @@ setInterval(() => {
     cell0.classList.remove('glitch');
   }, 300);
 }, 6000);
+
+function typeText(cell, text, speed = 80) {
+  // Supprime tout texte existant
+  const existing = cell.querySelector('span');
+  if (existing) existing.remove();
+
+  const span = document.createElement('span');
+  cell.appendChild(span);
+
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      span.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
+}
+
+// Lancer le texte animé après 1 seconde
+setTimeout(() => {
+  const cell0 = document.getElementById('cell-0');
+  typeText(cell0, '>>> creative.chain/01');
+}, 1000);
