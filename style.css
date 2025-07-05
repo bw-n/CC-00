@@ -58,3 +58,21 @@ body {
   80% { transform: translate(1px, 1px); }
   100% { transform: translate(0, 0); }
 }
+
+.cell.glitch-loop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, #aaa 0px, #aaa 1px, transparent 1px, transparent 2px);
+  opacity: 0.2;
+  animation: glitch-loop 0.3s steps(2, end);
+}
+
+@keyframes glitch-loop {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, 0); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
