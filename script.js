@@ -32,3 +32,11 @@ cell0.classList.add('halo');
 
 // Marquer cette case comme fixe pour l’exclure du turnover
 cell0.classList.add('fixed');
+
+// Glitch récurrent sur la case 1 (toutes les 6 secondes)
+setInterval(() => {
+  cell0.classList.add('glitch');
+  setTimeout(() => {
+    cell0.classList.remove('glitch');
+  }, 300); // durée du glitch
+}, 6000); // fréquence du glitch
