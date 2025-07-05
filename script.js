@@ -61,6 +61,16 @@ function rotateImage(cellId) {
   cell.style.backgroundSize = 'cover';
   cell.style.backgroundPosition = 'center';
   cell.style.backgroundRepeat = 'no-repeat';
+
+  // 🎯 Cas spécial : cell-0 → afficher texte uniquement sur cell-0-3.jpg
+  if (cellId === 'cell-0') {
+    const existing = cell.querySelector('span');
+    if (existing) existing.remove();
+
+    if (img.includes('cell-0-3.jpg')) {
+      typeText(cell, '>>> creative.chain/01');
+    }
+  }
 }
 
 // Appliquer un effet aléatoire à une case (hors .fixed)
@@ -86,7 +96,7 @@ setInterval(() => {
   rotateImage(randomId);
 }, 2000);
 
-// Configuration spéciale pour la case 1 (cell-0)
+// 🎯 Configuration spéciale pour la case 1 (cell-0)
 const cell0 = document.getElementById('cell-0');
 
 // Appliquer le logo BW comme image initiale
@@ -109,12 +119,20 @@ setInterval(() => {
   }, 300);
 }, 6000);
 
+// Fonction d’écriture animée (machine à écrire)
 function typeText(cell, text, speed = 80) {
-  // Supprime tout texte existant
-  const existing = cell.querySelector('span');
-  if (existing) existing.remove();
-
   const span = document.createElement('span');
+  span.style.position = 'absolute';
+  span.style.zIndex = '2';
+  span.style.bottom = '10px';
+  span.style.left = '10px';
+  span.style.color = '#ccc';
+  span.style.fontSize = '14px';
+  span.style.fontFamily = 'monospace';
+  span.style.background = 'rgba(0, 0, 0, 0.4)';
+  span.style.padding = '4px 6px';
+  span.style.borderRadius = '4px';
+  span.style.pointerEvents = 'none';
   cell.appendChild(span);
 
   let i = 0;
@@ -127,9 +145,3 @@ function typeText(cell, text, speed = 80) {
     }
   }, speed);
 }
-
-// Lancer le texte animé après 1 seconde
-setTimeout(() => {
-  const cell0 = document.getElementById('cell-0');
-  typeText(cell0, '>>> creative.chain/01');
-}, 1000);
