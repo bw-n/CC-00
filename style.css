@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  background: radial-gradient(ellipse at center, #1a1a1a 0%, #0f0f0f 100%);
+  background: #111;
   font-family: 'Open Sans', sans-serif;
-  overflow: hidden;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -13,23 +12,19 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 8px;
-  width: 90vmin;
-  height: 90vmin;
-  background: #222;
+  width: 1000px;
+  height: 1000px;
   border: 2px solid #888;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(200, 200, 200, 0.1);
-  position: relative;
+  background: #222;
 }
 
 .cell {
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-  border: 1px solid #555;
-  border-radius: 6px;
+  border: 1px solid #333;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
 }
 
 .cell::after {
