@@ -2,7 +2,68 @@
 const cells = document.querySelectorAll('.cell');
 const effects = ['glitch', 'fade', 'halo'];
 
-// Appliquer un effet aléatoire à une case (sauf celles marquées "fixed")
+// Images par case (3 images minimum par case)
+const cellImages = {
+  'cell-0': [
+    'assets/cell-0-1.jpg',
+    'assets/cell-0-2.jpg',
+    'assets/cell-0-3.jpg'
+  ],
+  'cell-1': [
+    'assets/cell-1-1.jpg',
+    'assets/cell-1-2.jpg',
+    'assets/cell-1-3.jpg'
+  ],
+  'cell-2': [
+    'assets/cell-2-1.jpg',
+    'assets/cell-2-2.jpg',
+    'assets/cell-2-3.jpg'
+  ],
+  'cell-3': [
+    'assets/cell-3-1.jpg',
+    'assets/cell-3-2.jpg',
+    'assets/cell-3-3.jpg'
+  ],
+  'cell-4': [
+    'assets/cell-4-1.jpg',
+    'assets/cell-4-2.jpg',
+    'assets/cell-4-3.jpg'
+  ],
+  'cell-5': [
+    'assets/cell-5-1.jpg',
+    'assets/cell-5-2.jpg',
+    'assets/cell-5-3.jpg'
+  ],
+  'cell-6': [
+    'assets/cell-6-1.jpg',
+    'assets/cell-6-2.jpg',
+    'assets/cell-6-3.jpg'
+  ],
+  'cell-7': [
+    'assets/cell-7-1.jpg',
+    'assets/cell-7-2.jpg',
+    'assets/cell-7-3.jpg'
+  ],
+  'cell-8': [
+    'assets/cell-8-1.jpg',
+    'assets/cell-8-2.jpg',
+    'assets/cell-8-3.jpg'
+  ]
+};
+
+// Fonction pour changer l’image d’une case
+function rotateImage(cellId) {
+  const cell = document.getElementById(cellId);
+  const images = cellImages[cellId];
+  const img = images[Math.floor(Math.random() * images.length)];
+
+  cell.style.backgroundImage = `url('${img}')`;
+  cell.style.backgroundSize = 'cover';
+  cell.style.backgroundPosition = 'center';
+  cell.style.backgroundRepeat = 'no-repeat';
+}
+
+// Appliquer un effet aléatoire à une case (hors .fixed)
 function randomEffect() {
   const eligibleCells = Array.from(cells).filter(cell => !cell.classList.contains('fixed'));
   const cell = eligibleCells[Math.floor(Math.random() * eligibleCells.length)];
@@ -15,13 +76,20 @@ function randomEffect() {
   }, 1500);
 }
 
-// Lancer le turnover toutes les 1.2 secondes
+// Lancer les effets aléatoires toutes les 1.2 secondes
 setInterval(randomEffect, 1200);
 
-// Configuration de la case 1 (cell-0)
+// Lancer le turnover d’image toutes les 2 secondes sur une case aléatoire
+setInterval(() => {
+  const cellIds = Object.keys(cellImages);
+  const randomId = cellIds[Math.floor(Math.random() * cellIds.length)];
+  rotateImage(randomId);
+}, 2000);
+
+// Configuration spéciale pour la case 1 (cell-0)
 const cell0 = document.getElementById('cell-0');
 
-// Appliquer le logo BW
+// Appliquer le logo BW comme image initiale
 cell0.style.backgroundImage = "url('https://github.com/bw-n/CC-00/blob/main/assets/333_Creative_Chain_logo_BW_WEB_byJOWEL_HOMESKILLZ.jpg?raw=true')";
 cell0.style.backgroundSize = "cover";
 cell0.style.backgroundPosition = "center";
@@ -30,7 +98,7 @@ cell0.style.backgroundRepeat = "no-repeat";
 // Ajouter un effet d’intro (halo)
 cell0.classList.add('halo');
 
-// Marquer cette case comme fixe pour l’exclure du turnover
+// Marquer cette case comme fixe pour l’exclure des effets aléatoires
 cell0.classList.add('fixed');
 
 // Glitch récurrent sur la case 1 (toutes les 6 secondes)
@@ -38,5 +106,5 @@ setInterval(() => {
   cell0.classList.add('glitch');
   setTimeout(() => {
     cell0.classList.remove('glitch');
-  }, 300); // durée du glitch
-}, 6000); // fréquence du glitch
+  }, 300);
+}, 6000);
