@@ -94,7 +94,7 @@ setInterval(() => {
   const cellIds = Object.keys(cellImages);
   const randomId = cellIds[Math.floor(Math.random() * cellIds.length)];
   rotateImage(randomId);
-}, 2000);
+}, 300);
 
 // 🎯 Configuration spéciale pour la case 1 (cell-0)
 const cell0 = document.getElementById('cell-0');
