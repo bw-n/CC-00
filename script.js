@@ -2,10 +2,15 @@
 const cells = document.querySelectorAll('.cell');
 const effects = ['glitch', 'fade', 'halo'];
 
-// Images par case (3 images minimum par case)
+// Images ou textes par case
 const cellImages = {
   'cell-0': ['assets/cell-0-1.jpg', 'assets/cell-0-2.jpg', 'assets/cell-0-3.jpg'],
-  'cell-1': ['assets/cell-1-1.jpg', 'assets/cell-1-2.jpg', 'assets/cell-1-3.jpg'],
+  'cell-1': [
+  '>>> BLOCKCHAIN WORKERS system.online [OK]',
+  '>>> loading.module: creative chain ecosystem',
+  '>>> awaiting.input...'
+],
+
   'cell-2': ['assets/cell-2-1.jpg', 'assets/cell-2-2.jpg', 'assets/cell-2-3.jpg'],
   'cell-3': ['assets/cell-3-1.jpg', 'assets/cell-3-2.jpg', 'assets/cell-3-3.jpg'],
   'cell-4': ['assets/cell-4-1.jpg', 'assets/cell-4-2.jpg', 'assets/cell-4-3.jpg'],
@@ -15,25 +20,31 @@ const cellImages = {
   'cell-8': ['assets/cell-8-1.jpg', 'assets/cell-8-2.jpg', 'assets/cell-8-3.jpg']
 };
 
-// Fonction pour changer l’image d’une case
+// Fonction pour changer l’image ou le texte d’une case
 function rotateImage(cellId) {
   const cell = document.getElementById(cellId);
-  const images = cellImages[cellId];
-  const img = images[Math.floor(Math.random() * images.length)];
+  const items = cellImages[cellId];
+  const content = items[Math.floor(Math.random() * items.length)];
 
-  cell.style.backgroundImage = `url('${img}')`;
-  cell.style.backgroundSize = 'cover';
-  cell.style.backgroundPosition = 'center';
-  cell.style.backgroundRepeat = 'no-repeat';
+  // Nettoyer le contenu précédent
+  const existing = cell.querySelector('span');
+  if (existing) existing.remove();
 
-  // 🎯 Cas spécial : cell-0 → afficher texte uniquement sur cell-0-3.jpg
-  if (cellId === 'cell-0') {
-    const existing = cell.querySelector('span');
-    if (existing) existing.remove();
+  // Si c’est une image
+  if (content.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
+    cell.style.backgroundImage = `url('${content}')`;
+    cell.style.backgroundSize = 'cover';
+    cell.style.backgroundPosition = 'center';
+    cell.style.backgroundRepeat = 'no-repeat';
+  } else {
+    // Sinon, c’est du texte animé
+    cell.style.backgroundImage = 'none';
+    typeText(cell, content);
+  }
 
-    if (img.includes('cell-0-3.jpg')) {
-      typeText(cell, '>>> creative.chain/01');
-    }
+  // Cas spécial : cell-0 → texte uniquement sur cell-0-3.jpg
+  if (cellId === 'cell-0' && content.includes('cell-0-3.jpg')) {
+    typeText(cell, '>>> creative.chain/01');
   }
 }
 
@@ -76,11 +87,11 @@ function randomEffect() {
   }, 1500);
 }
 
-// Turnover d’image par case (individuel)
+// Turnover d’image ou texte par case
 Object.keys(cellImages).forEach(cellId => {
   setInterval(() => {
     rotateImage(cellId);
-  }, 3000); // chaque case change toutes les 3s
+  }, 3000);
 });
 
 // Turnover d’effets visuels aléatoires
@@ -96,20 +107,14 @@ setInterval(shuffleCells, 5000);
 
 // 🎯 Configuration spéciale pour la case 0 (cell-0)
 const cell0 = document.getElementById('cell-0');
-
-// Appliquer le logo BW comme image initiale
 cell0.style.backgroundImage = "url('https://github.com/bw-n/CC-00/blob/main/assets/333_Creative_Chain_logo_BW_WEB_byJOWEL_HOMESKILLZ.jpg?raw=true')";
 cell0.style.backgroundSize = 'cover';
 cell0.style.backgroundPosition = 'center';
 cell0.style.backgroundRepeat = 'no-repeat';
-
-// Ajouter un effet d’intro (halo)
 cell0.classList.add('halo');
-
-// Marquer cette case comme fixe pour l’exclure des effets aléatoires
 cell0.classList.add('fixed');
 
-// Glitch récurrent sur la case 0 (toutes les 6 secondes)
+// Glitch récurrent sur la case 0
 setInterval(() => {
   cell0.classList.add('glitch');
   setTimeout(() => {
